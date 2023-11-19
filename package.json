@@ -1,0 +1,30 @@
+{
+  "name": "mqpost",
+  "author": "frkr",
+  "license": "MIT",
+  "version": "1.0.0",
+  "description": "Post a message to a message queue",
+  "keywords": [
+    "cloudflare",
+    "cloudflare-workers",
+    "worker",
+    "mq",
+    "message-queue"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frkr/mqpost"
+  },
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "tail": "wrangler tail"
+  },
+  "dependencies": {
+    "business-whatsapp": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.x.x",
+    "typescript": "5.0.x",
+    "wrangler": "3.7.x"
+  }
+}
