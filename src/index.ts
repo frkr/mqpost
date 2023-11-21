@@ -12,7 +12,7 @@ export default {
         try {
             if (request.method === 'GET') {
                 return challenge(env.META_VERIFY, request);
-            } else {
+            } else if (request.method !== 'OPTIONS') {
                 const nextId = await this.nextId(request, env, ctx);
                 await env.MQPOSTR2.put(nextId + ".txt", await request.text());
                 await env.MQPOST.send(nextId, {
@@ -20,11 +20,11 @@ export default {
                 });
                 return HTTP_CREATED();
             }
-
         } catch (e) {
             console.error('FATAL', e, e.stack);
             return HTTP_UNPROCESSABLE_ENTITY();
         }
+        return HTTP_OK();
     },
     async queue(batch: MessageBatch<string>, env: Env): Promise<void> {
         for (const msg of batch.messages) {
@@ -58,5 +58,6 @@ export default {
     },
 };
 
+const HTTP_OK = () => new Response('200 Ok', {status: 200});
 const HTTP_CREATED = () => new Response('201 Created', {status: 201});
 const HTTP_UNPROCESSABLE_ENTITY = () => new Response('422 Unprocessable Content', {status: 422});
