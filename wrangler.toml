@@ -1,8 +1,8 @@
 name = "mqpost"
 main = "src/index.ts"
-compatibility_date = "2022-07-07"
-workers_dev = true
+compatibility_date = "2024-01-12"
 account_id = "4f296275a5fa3d5c36343151790e96d3"
+workers_dev = true
 
 [[queues.producers]]
 queue = "mqpost"
@@ -12,6 +12,10 @@ binding = "MQPOST"
 queue = "mqwaba"
 binding = "MQWABA"
 
+[[queues.producers]]
+queue = "mqexpress"
+binding = "MQEXPRESS"
+
 [[queues.consumers]]
 queue = "mqpost"
 max_batch_size = 1
@@ -20,10 +24,3 @@ max_batch_size = 1
 preview_bucket_name = "mqpostr2"
 bucket_name = "mqpostr2"
 binding = "MQPOSTR2"
-
-[durable_objects]
-bindings = [{ name = "MQPOSTDO", class_name = "MQPOSTDO" }]
-
-[[migrations]]
-tag = "v1" # Should be unique for each entry
-new_classes = ["MQPOSTDO"]

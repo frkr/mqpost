@@ -1,0 +1,8 @@
+## POST
+POST https://mqpost.mundial.workers.dev/
+Content-Type: application/json
+
+{
+  "queue": "test",
+  "message": "Hello World"
+}

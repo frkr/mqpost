@@ -23,8 +23,8 @@
     "business-whatsapp": "latest"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.x.x",
-    "typescript": "5.0.x",
-    "wrangler": "3.7.x"
+    "@cloudflare/workers-types": "4.20231218.0",
+    "typescript": "5.1.x",
+    "wrangler": "3.22.x"
   }
 }
