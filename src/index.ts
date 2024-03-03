@@ -23,15 +23,16 @@ export default {
                 } else {
                     const nextId = await randomHEX()
 
-                    // Turned Off
-                    // await env.MQPOSTR2.put(nextId + ".txt", await request.text());
-                    // await env.MQPOST.send({
-                    //         id: nextId,
-                    //         url: request.url,
-                    //     } as MQMessage,
-                    //     {
-                    //         contentType: "json",
-                    //     });
+                    if (request.url.includes('kommo')) {
+                        await env.MQPOSTR2.put(nextId + ".txt", await request.text());
+                        await env.MQPOST.send({
+                                id: nextId,
+                                url: request.url,
+                            } as MQMessage,
+                            {
+                                contentType: "json",
+                            });
+                    }
                 }
 
                 return HTTP_CREATED();
@@ -39,23 +40,52 @@ export default {
         } catch (e) {
             console.error('FATAL', e, e.stack);
         }
+        // XXX atack protection
+        await new Promise((resolve) => setTimeout(resolve, 5000));
         return HTTP_UNPROCESSABLE_ENTITY();
     },
     async queue(batch: MessageBatch<MQMessage>, env: Env): Promise<void> {
         for (const msg of batch.messages) {
             try {
 
-                // Turned Off
                 // if (msg.body.url.indexOf('.express/') != -1) {
                 //     await env.MQEXPRESS.send(msg.body, {
                 //         contentType: "json",
                 //     });
                 // } else {
-                try {
-                    await env.MQPOSTR2.delete(msg.body.id + ".txt");
-                } catch (e) {
+
+                // TODO Key Kommo
+                if (msg.body.url.indexOf('kommo') != -1) {
+
+                    try {
+
+                        await env.MQEMAIL.send(
+                            await (await env.MQPOSTR2.get(msg.body.id + '.txt')).json()
+                            , {
+                                contentType: "json",
+                            });
+
+                    } catch (e) {
+                        try {
+                            console.error(
+                                "kommo",
+                                await (await env.MQPOSTR2.get(msg.body.id + '.txt')).text(),
+                                batch.queue,
+                                e,
+                                e.stack
+                            );
+                        } catch (e) {
+                            console.error(
+                                "kommo",
+                                batch.queue,
+                                e,
+                                e.stack
+                            );
+                        }
+                    } finally {
+                        await env.MQPOSTR2.delete(msg.body.id + ".txt");
+                    }
                 }
-                // }
 
             } catch (e) {
                 console.error("queue", batch.queue, e, e.stack);

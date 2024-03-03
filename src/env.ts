@@ -1,6 +1,7 @@
 interface Env {
 
     MQPOST: Queue<MQMessage>;
+    MQEMAIL: Queue<MQMessage>;
     MQEXPRESS: Queue<MQMessage>;
     MQWABA: Queue<any>;
     MQPOSTR2: R2Bucket;

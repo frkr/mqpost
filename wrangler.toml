@@ -4,9 +4,17 @@ compatibility_date = "2024-01-12"
 account_id = "4f296275a5fa3d5c36343151790e96d3"
 workers_dev = true
 
+routes = [
+    { pattern = "mq.ideias.casa", custom_domain = true }
+]
+
 [[queues.producers]]
 queue = "mqpost"
 binding = "MQPOST"
+
+[[queues.producers]]
+queue = "mqemail"
+binding = "MQEMAIL"
 
 [[queues.producers]]
 queue = "mqwaba"

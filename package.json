@@ -17,7 +17,7 @@
   },
   "scripts": {
     "deploy": "wrangler deploy",
-    "tail": "wrangler tail"
+    "log": "wrangler tail"
   },
   "dependencies": {
     "business-whatsapp": "latest"
