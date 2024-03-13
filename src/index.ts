@@ -21,9 +21,10 @@ export default {
                         contentType: "json",
                     });
                 } else {
-                    const nextId = await randomHEX()
 
                     if (request.url.includes('kommo')) {
+
+                        const nextId = await randomHEX()
                         await env.MQPOSTR2.put(nextId + ".txt", await request.text());
                         await env.MQPOST.send({
                                 id: nextId,
@@ -32,6 +33,7 @@ export default {
                             {
                                 contentType: "json",
                             });
+
                     }
                 }
 
