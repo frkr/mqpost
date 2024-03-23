@@ -13,10 +13,6 @@ queue = "mqpost"
 binding = "MQPOST"
 
 [[queues.producers]]
-queue = "mqemail"
-binding = "MQEMAIL"
-
-[[queues.producers]]
 queue = "mqwaba"
 binding = "MQWABA"
 

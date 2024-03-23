@@ -22,19 +22,19 @@ export default {
                     });
                 } else {
 
-                    if (request.url.includes('kommo')) {
-
-                        const nextId = await randomHEX()
-                        await env.MQPOSTR2.put(nextId + ".txt", await request.text());
-                        await env.MQPOST.send({
-                                id: nextId,
-                                url: request.url,
-                            } as MQMessage,
-                            {
-                                contentType: "json",
-                            });
-
-                    }
+                    // if (request.url.includes('sdfkjghwedfkjgh')) {
+                    //
+                    //     const nextId = await randomHEX()
+                    //     await env.MQPOSTR2.put(nextId + ".txt", await request.text());
+                    //     await env.MQPOST.send({
+                    //             id: nextId,
+                    //             url: request.url,
+                    //         } as MQMessage,
+                    //         {
+                    //             contentType: "json",
+                    //         });
+                    //
+                    // }
                 }
 
                 return HTTP_CREATED();
@@ -55,39 +55,6 @@ export default {
                 //         contentType: "json",
                 //     });
                 // } else {
-
-                // TODO Key Kommo
-                if (msg.body.url.indexOf('kommo') != -1) {
-
-                    try {
-
-                        await env.MQEMAIL.send(
-                            await (await env.MQPOSTR2.get(msg.body.id + '.txt')).json()
-                            , {
-                                contentType: "json",
-                            });
-
-                    } catch (e) {
-                        try {
-                            console.error(
-                                "kommo",
-                                await (await env.MQPOSTR2.get(msg.body.id + '.txt')).text(),
-                                batch.queue,
-                                e,
-                                e.stack
-                            );
-                        } catch (e) {
-                            console.error(
-                                "kommo",
-                                batch.queue,
-                                e,
-                                e.stack
-                            );
-                        }
-                    } finally {
-                        await env.MQPOSTR2.delete(msg.body.id + ".txt");
-                    }
-                }
 
             } catch (e) {
                 console.error("queue", batch.queue, e, e.stack);
